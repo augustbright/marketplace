@@ -2,16 +2,16 @@
 import { GuestMenu } from "./guest-menu";
 import { MouseEventHandler } from "react";
 import { useSession } from "next-auth/react";
+import { UserMenu } from "./user-menu";
 
-export const AuthMenu = async ({ onClick }: {
+export const AuthMenu = ({ onClick }: {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }) => {
     const session = useSession();
 
-    if (session) {
+    if (session && session.data?.user) {
         return (
-            // <UserMenu user={session.user} onClick={onClick} />
-            <div>Hello</div>
+            <UserMenu user={session.data?.user} onClick={onClick} />
         );
     } else {
         return (
