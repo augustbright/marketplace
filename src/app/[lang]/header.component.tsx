@@ -1,6 +1,6 @@
 'use client';
 
-import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from "react";
 import Link from "next/link";
@@ -12,44 +12,43 @@ type TPage = {
     label: string;
 };
 
-type TSetting = {
-    href: string;
-    label: string;
-};
-
 const pages: TPage[] = [];
-const settings: TSetting[] = [];
 
 export const Header = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
-    };
-    const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
     };
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
-
     const l = useLocalization();
-    console.log('l', l);
 
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Link href="/" passHref>
-                        Marketplace
-                    </Link>
-
+                    <Typography
+                        variant="h6"
+                        noWrap
+                        component="p"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'none', md: 'flex' },
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                        }}
+                    >
+                        <Link href="/" passHref>
+                            {l.common.app_name}
+                        </Link>
+                    </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
                             size="large"
@@ -88,9 +87,25 @@ export const Header = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <Link href="/" passHref>
-                        Marketplace
-                    </Link>
+                    <Typography
+                        variant="h5"
+                        noWrap
+                        component="p"
+                        sx={{
+                            mr: 2,
+                            display: { xs: 'flex', md: 'none' },
+                            flexGrow: 1,
+                            fontFamily: 'monospace',
+                            fontWeight: 700,
+                            letterSpacing: '.3rem',
+                            color: 'inherit',
+                            textDecoration: 'none',
+                        }}
+                    >
+                        <Link href="/" passHref>
+                            {l.common.app_name}
+                        </Link>
+                    </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Link href={page.href} key={page.label}>
@@ -106,31 +121,7 @@ export const Header = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <AuthMenu onClick={handleOpenUserMenu} />
-                        <Menu
-                            sx={{ mt: '45px' }}
-                            id="menu-appbar"
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <Link key={setting.label} href={setting.href}>
-                                    <MenuItem onClick={handleCloseUserMenu}>
-                                        <Typography textAlign="center">{setting.label}</Typography>
-                                    </MenuItem>
-                                </Link>
-                            ))}
-                        </Menu>
+                        <AuthMenu />
                     </Box>
                 </Toolbar>
             </Container>

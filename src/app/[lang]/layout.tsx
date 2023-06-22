@@ -5,12 +5,12 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import { Inter } from 'next/font/google'
-import { Header } from './[lang]/header.component';
-import { Themed } from './[lang]/themed.component';
-import { Locale, i18n } from '../i18n-config';
+import { Header } from './header.component';
+import { Themed } from './themed.component';
+import { Locale, i18n } from '../../i18n-config';
 import { getDictionary } from '@/get-dictionary';
-import { Localization } from './[lang]/localization.component';
-import { AuthProvider } from './[lang]/auth.component';
+import { Localization } from './localization.component';
+import { AuthProvider } from './auth.component';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -30,20 +30,18 @@ export default async function RootLayout({
   children: React.ReactNode,
   params: { lang: Locale }
 }) {
-  console.log('render root layout')
-  // const dictionary = await getDictionary(params.lang);
-  // console.log('dictionary', dictionary);
+  const dictionary = await getDictionary(params.lang);
   return (
     <AuthProvider>
       <html lang={params.lang}>
         <body className={inter.className}>
 
-          {/* <Localization dictionary={dictionary}> */}
-          {/* <Themed> */}
-          <Header />
-          {children}
-          {/* </Themed> */}
-          {/* </Localization> */}
+          <Localization dictionary={dictionary}>
+            <Themed>
+              <Header />
+              {children}
+            </Themed>
+          </Localization>
 
         </body>
       </html>

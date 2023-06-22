@@ -1,17 +1,21 @@
 'use client';
 import { GuestMenu } from "./guest-menu";
-import { MouseEventHandler } from "react";
 import { useSession } from "next-auth/react";
 import { UserMenu } from "./user-menu";
+import { stat } from "fs";
+import { CircularProgress } from "@mui/material";
 
-export const AuthMenu = ({ onClick }: {
-    onClick?: MouseEventHandler<HTMLButtonElement>;
-}) => {
-    const session = useSession();
+export const AuthMenu = () => {
+    const { status, data } = useSession();
 
-    if (session && session.data?.user) {
+    if (status === "loading") {
         return (
-            <UserMenu user={session.data?.user} onClick={onClick} />
+            <CircularProgress color="info" />
+        );
+    };
+    if (status === "authenticated") {
+        return (
+            <UserMenu user={data.user} />
         );
     } else {
         return (
