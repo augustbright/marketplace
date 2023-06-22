@@ -1,10 +1,11 @@
 'use client';
 
-import { AppBar, Avatar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Box, Button, Container, IconButton, Menu, MenuItem, Toolbar, Tooltip, Typography } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { useState } from "react";
 import Link from "next/link";
 import { useLocalization } from "./use-localization";
+import { AuthMenu } from "./auth-menu/auth-menu";
 
 type TPage = {
     href: string;
@@ -39,28 +40,14 @@ export const Header = () => {
     };
 
     const l = useLocalization();
+    console.log('l', l);
 
     return (
         <AppBar position="static">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <Link href="/">
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="a"
-                            sx={{
-                                mr: 2,
-                                display: { xs: 'none', md: 'flex' },
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            {l.common.app_name}
-                        </Typography>
+                    <Link href="/" passHref>
+                        Marketplace
                     </Link>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -101,24 +88,8 @@ export const Header = () => {
                             ))}
                         </Menu>
                     </Box>
-                    <Link href="/">
-                        <Typography
-                            variant="h5"
-                            noWrap
-                            component="a"
-                            sx={{
-                                mr: 2,
-                                display: { xs: 'flex', md: 'none' },
-                                flexGrow: 1,
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            {l.common.app_name}
-                        </Typography>
+                    <Link href="/" passHref>
+                        Marketplace
                     </Link>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
@@ -135,11 +106,7 @@ export const Header = () => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                            </IconButton>
-                        </Tooltip>
+                        <AuthMenu onClick={handleOpenUserMenu} />
                         <Menu
                             sx={{ mt: '45px' }}
                             id="menu-appbar"
