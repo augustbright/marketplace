@@ -11,6 +11,7 @@ import { Locale, i18n } from '../../i18n-config';
 import { getDictionary } from '@/get-dictionary';
 import { Localization } from './localization.component';
 import { AuthProvider } from './auth.component';
+import { RootContent } from './root-content';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -39,7 +40,9 @@ export default async function RootLayout({
           <Localization dictionary={dictionary}>
             <Themed>
               <Header />
-              {children}
+              <RootContent>
+                {children}
+              </RootContent>
             </Themed>
           </Localization>
 
