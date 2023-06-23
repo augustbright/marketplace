@@ -3,6 +3,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { prisma } from "@/app/prisma";
 
+export const GET = async (req: NextRequest) => {
+    const listings = await prisma.listing.findMany({
+        orderBy: {
+            createdAt: "desc"
+        }
+    });
+
+    return NextResponse.json(listings);
+};
+
 export const POST = async (req: NextRequest) => {
     const { title, description, price, currency } = await req.json();
     const session = await getServerSession(authOptions);
