@@ -12,7 +12,12 @@ type TPage = {
     label: string;
 };
 
-const pages: TPage[] = [];
+const pages: TPage[] = [
+    {
+        href: '/catalog',
+        label: 'Catalog'
+    }
+];
 
 export const Header = () => {
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -119,6 +124,12 @@ export const Header = () => {
                             </Link>
                         ))}
                     </Box>
+
+                    <Link href='/create'>
+                        <Button sx={{ mr: 2 }} variant="contained" color="success">
+                            Create
+                        </Button>
+                    </Link>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <AuthMenu />

@@ -3,14 +3,26 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Listing } from '@prisma/client';
+import { Image, Listing, User } from '@prisma/client';
+import { CardMedia } from '@mui/material';
 
 export default function ListingCard({ listing }: {
-    listing: Listing
+    listing: Listing & { user: User, image: Image }
 }) {
     return (
         <Card sx={{ maxWidth: 345 }}>
             <CardContent>
+                {listing.image && (
+                    <CardMedia
+                        component="img"
+                        alt={listing.image.name}
+                        image={listing.image.url}
+                        sx={{
+                            aspectRatio: 1
+                        }}
+                    />
+                )}
+
                 <Typography gutterBottom variant="h5" component="div">
                     {listing.title}
                 </Typography>

@@ -1,7 +1,7 @@
 'use client';
 
 import { CircularProgress, Container, Grid } from "@mui/material";
-import { Listing } from "@prisma/client";
+import { Image, Listing, User } from "@prisma/client";
 import ListingCard from "../listing-card";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -9,7 +9,7 @@ import axios from "axios";
 export const Catalog = () => {
     const { data: listings, isFetching } = useQuery({
         queryKey: ['listings'],
-        queryFn: async () => axios<Listing[]>('/api/listing')
+        queryFn: async () => axios<(Listing & { user: User, image: Image })[]>('/api/listing')
             .then(response => response.data)
     });
 

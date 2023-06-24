@@ -2,7 +2,9 @@
 
 import { Box, Button, MenuItem, TextField } from "@mui/material";
 import axios from "axios";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { ImageInput } from "../image-uploader/image-input";
 
 type TForm = {
     title: string;
@@ -28,10 +30,22 @@ const currencies = [
 
 export const CreateListing = () => {
     const { register, handleSubmit, formState } = useForm<TForm>();
+    const [images, setImages] = useState<File[]>([]);
+
     const onSubmit = async (form: TForm) => {
-        await axios.post('/api/listing', {
-            ...form,
-            price: Number(form.price),
+        const formData = new FormData();
+        formData.append('title', form.title);
+        formData.append('description', form.description);
+        formData.append('price', String(form.price));
+        formData.append('currency', form.currency);
+        images.forEach((image) => {
+            formData.append('images', image);
+        });
+
+        await axios.post('/api/listing', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         });
     };
 
@@ -107,6 +121,9 @@ export const CreateListing = () => {
                     ))}
                 </TextField>
             </Box>
+
+            <ImageInput images={images} onChange={setImages} />
+
             <Box sx={{
                 pt: 2,
                 display: 'flex',
