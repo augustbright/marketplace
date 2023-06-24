@@ -10,7 +10,7 @@ import { Themed } from './themed.component';
 import { Locale, i18n } from '../../i18n-config';
 import { getDictionary } from '@/get-dictionary';
 import { Localization } from './localization.component';
-import { AuthProvider } from './auth.component';
+import { Providers } from './providers.component';
 import { RootContent } from './root-content';
 
 const inter = Inter({ subsets: ['latin'] })
@@ -33,7 +33,7 @@ export default async function RootLayout({
 }) {
   const dictionary = await getDictionary(params.lang);
   return (
-    <AuthProvider>
+    <Providers>
       <html lang={params.lang}>
         <body className={inter.className}>
 
@@ -48,6 +48,6 @@ export default async function RootLayout({
 
         </body>
       </html>
-    </AuthProvider>
+    </Providers>
   )
 }
