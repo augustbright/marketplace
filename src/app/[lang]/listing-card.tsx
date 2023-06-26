@@ -4,13 +4,23 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Image, Listing, User } from '@prisma/client';
-import { CardMedia } from '@mui/material';
+import { Avatar, CardHeader, CardMedia } from '@mui/material';
+import { red } from '@mui/material/colors';
 
 export default function ListingCard({ listing }: {
     listing: Listing & { user: User, image: Image }
 }) {
     return (
         <Card sx={{ maxWidth: 345 }}>
+            <CardHeader
+                avatar={
+                    <Avatar src={listing.user.image || undefined} sx={{ bgcolor: red[500] }} aria-label="user">
+                        {listing.user.name[0]}
+                    </Avatar>
+                }
+                title={listing.user.name}
+                subheader={listing.createdAt.toLocaleString()}
+            />
             <CardContent>
                 {listing.image && (
                     <CardMedia
